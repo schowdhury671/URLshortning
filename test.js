@@ -3,11 +3,11 @@ const request = require('request');
 const test = require('tape');
 
 // Start the app
-const env = Object.assign({}, process.env, {PORT: 5000});
-const child = spawn('node', ['index.js'], {env});
+const environemnt = Object.assign({}, process.environemnt, {PORT: 5000});
+const child = spawn('node', ['index.js'], {environemnt});
 
-test('responds to requests', (t) => {
-  t.plan(4);
+test('responds to requests', (p) => {
+  p.plan(4);
 
   // Wait until the server is ready
   child.stdout.on('data', _ => {
@@ -17,12 +17,12 @@ test('responds to requests', (t) => {
       child.kill();
 
       // No error
-      t.false(error);
+      p.false(error);
       // Successful response
-      t.equal(response.statusCode, 200);
+      p.equal(response.statusCode, 200);
       // Assert content checks
-      t.notEqual(body.indexOf("<title>Node.js Getting Started on Heroku</title>"), -1);
-      t.notEqual(body.indexOf("Getting Started with Node on Heroku"), -1);
+      p.notEqual(body.indexOf("<title>Node.js Getting Started on Heroku</title>"), -1);
+      p.notEqual(body.indexOf("Getting Started with Node on Heroku"), -1);
     });
   });
 });
